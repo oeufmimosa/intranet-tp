@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 
+import './../../style/form.css';
+
 const AddCollaborator = () => {
     const [collaborator, setCollaborator] = useState({
         id: '',
@@ -17,6 +19,10 @@ const AddCollaborator = () => {
         service: '',
         isAdmin: false
     })
+
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    console.log(confirmPassword);
 
     const civilities = [
         {value: "female", text: "Femme"}, 
@@ -41,10 +47,6 @@ const AddCollaborator = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        collaborator.gender = civility;
-        collaborator.service = category;
-
-        console.log(collaborator);
 
         const url = `http://localhost:9000/api/collaborateurs`;
         const localToken = localStorage.getItem('token');
@@ -63,6 +65,16 @@ const AddCollaborator = () => {
         {
             const response = await fetch(url, options)
             const result = await response.json();
+
+            if(result.success)
+            {
+                alert(result.success);
+            }
+
+            if(result.error)
+            {
+                alert(result.error);
+            }
         }
     }
 
@@ -72,7 +84,7 @@ const AddCollaborator = () => {
             user.firstname.trim().length === 0 ||
             user.lastname.trim().length === 0 ||
             user.email.trim().length === 0 ||
-            user.password.trim().length === 0 ||
+            // user.password.trim().length === 0 ||
             user.phone.trim().length === 0 ||
             user.birthdate.trim().length === 0 ||
             user.city.trim().length === 0 ||
@@ -80,13 +92,27 @@ const AddCollaborator = () => {
             user.photo.trim().length === 0 ||
             !user.service)
         {
-            console.log(user);
-            
             window.alert('Certains champs ne sont pas complétés');
             return false;
         }
 
+        if(user.password != confirmPassword)
+        {
+            window.alert('Le mot de passe et sa confirmation sont différents');
+            return false;
+        }
+        
+        if(emailIsValid(user.email) == false)
+        {
+            window.alert('Le format d\'email est incorrect');
+            return false;
+        }
+
         return true;
+    }
+    
+    const emailIsValid = (email) => {
+        return /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)
     }
 
     const handleInputChange = (event) => {
@@ -98,8 +124,6 @@ const AddCollaborator = () => {
             [name]: value
         }
 
-        console.log(value);
-
         setCollaborator(updatecollaborator);
     }
 
@@ -110,61 +134,73 @@ const AddCollaborator = () => {
 
     return (
         <>
-            <h3>Ajouter un collaborateur</h3>
-            <form onSubmit={onSubmitForm} method="POST">
-                <select value={collaborator.gender} name="gender" onChange={handleInputChange}>
-                    {optionsCivilities}
-                </select>
+            <div className="login-box">
+                <h3>Ajouter un collaborateur</h3>
+                <form onSubmit={onSubmitForm} method="POST">
+                    <select className="select" value={collaborator.gender} name="gender" onChange={handleInputChange}>
+                        {optionsCivilities}
+                    </select>
 
-                <select value={collaborator.service} name="service" onChange={handleInputChange}>
-                    {optionsCategories}
-                </select>
-                <div>
-                    <label htmlFor="lastname">Nom:</label>
-                    <input type="text" name="lastname"  value={collaborator.lastname} onChange={handleInputChange}/>
-                </div>
-                <div>
-                    <label htmlFor="firstname">Prénom:</label>
+                    <select className="select" value={collaborator.service} name="service" onChange={handleInputChange}>
+                        {optionsCategories}
+                    </select>
+                    <div className="user-box">
+                        <input type="text" name="lastname"  value={collaborator.lastname} onChange={handleInputChange}/>    
+                        <label htmlFor="lastname">Nom:</label>
+                    </div>
+                    <div className="user-box">
                     <input type="text" name="firstname"  value={collaborator.firstname} onChange={handleInputChange}/>
-                </div>
-                <div>
-                    <label htmlFor="email">Email:</label>
+                        <label htmlFor="firstname">Prénom:</label>
+                    
+                    </div>
+                    <div className="user-box">
                     <input type="email" name="email"  value={collaborator.email} onChange={handleInputChange}/>
-                </div>
-                <div>
-                    <label htmlFor="password">Mot de passe:</label>
+                        <label htmlFor="email">Email:</label>
+                        
+                    </div>
+                    <div className="user-box">
                     <input type="password" name="password" value={collaborator.password} onChange={handleInputChange}/>
-                </div>
-                <div>
-                    <label htmlFor="confirmPassword">Confirmation</label>
-                    <input type="password" name="confirmPassword" value={collaborator.password} onChange={handleInputChange}/>
-                </div>
-                <div>
-                    <label htmlFor="phone">Téléphone:</label>
+                        <label htmlFor="password">Mot de passe:</label>
+                        
+                    </div>
+                    <div className="user-box">
+                        <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                        <label htmlFor="confirmPassword">Confirmation:</label>
+                    </div>
+                    <div className="user-box">
                     <input type="text" name="phone" value={collaborator.phone} onChange={handleInputChange}/>
-                </div>           
-                <div>
-                    <label htmlFor="birthdate">Date de naissance:</label>
+                        <label htmlFor="phone">Téléphone:</label>
+                    
+                    </div>           
+                    <div className="user-box">
                     <input type="date" name="birthdate" value={collaborator.birthdate} onChange={handleInputChange}/>
-                </div>                           
-                <div>
-                    <label htmlFor="city">Ville:</label>
+                        <label htmlFor="birthdate">Date de naissance:</label>
+                    
+                    </div>                           
+                    <div className="user-box">
                     <input type="text" name="city" value={collaborator.city} onChange={handleInputChange}/>
-                </div>                                          
-                <div>
-                    <label htmlFor="country">Pays:</label>
+                        <label htmlFor="city">Ville:</label>
+                        
+                    </div>                                          
+                    <div className="user-box">
                     <input type="text" name="country" value={collaborator.country} onChange={handleInputChange}/>
-                </div>
-                <div>
-                    <label htmlFor="photo">Photo:</label>
+                        <label htmlFor="country">Pays:</label>
+                    
+                    </div>
+                    <div className="user-box">
                     <input type="text" name="photo" value={collaborator.photo} onChange={handleInputChange}/>
-                </div>
-                <div>
-                    <label htmlFor="isAdmin">Administrateur ? :</label>
+                        <label htmlFor="photo">Photo:</label>
+                    
+                    </div>
+                    <div className="user-box">
                     <input type="checkbox" name="isAdmin" value={collaborator.isAdmin} onChange={checkButtonAdmin}/>
-                </div>
-                <input type="submit" value="Ajouter" />
-            </form>
+                        <label htmlFor="isAdmin">Administrateur ? :</label>
+                    
+                    </div>
+                    <input class="submitButton" type="submit" value="Ajouter" />
+                </form>
+            </div>
+            
         </>
     )
 }

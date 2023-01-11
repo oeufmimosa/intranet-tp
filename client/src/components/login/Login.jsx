@@ -2,9 +2,11 @@ import { useState} from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector} from "react-redux";
 import { userConnection } from "../../actions/userActions";
+import './../../style/form.css';
 
 const Login = () => {
 
+    const { userSession } = useSelector( state => state.collaboratorReducer );
 
     const [userLogin, setUserLogin] = useState({
         email:'',
@@ -25,13 +27,10 @@ const Login = () => {
         setUserLogin(updateUserLogin)
     }
 
+
     const onSubmitLoginForm = async (e) => {
+
         e.preventDefault();
-
-        if(userLogin.email.trim().length === 0 || userLogin.password.trim().length === 0)
-        {
-
-        }
 
         const userInfos = {
             email: userLogin.email,
@@ -55,7 +54,6 @@ const Login = () => {
         localStorage.removeItem('token');
         localStorage.setItem('token', result.token);
 
-
         if(!result.error)
         {      
             dispatch(userConnection({
@@ -76,24 +74,39 @@ const Login = () => {
                 }
             }))
 
+            if(result.success)
+            {
+                alert(result.success);
+            }
+
             navigate('/accueil');
+        }
+        
+        if(result.error)
+        {
+            alert(result.error);
         }
     }
 
     return (
         <>
-            <h3>Connexion</h3>
-            <form method="POST" onSubmit={onSubmitLoginForm}>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" name="email"  value={userLogin.email} onChange={handleInputChange}/>
+            {!userSession.userConnection ? 
+                <div className="login-box">
+                    <h3 >Connexion</h3>
+                    <form method="POST" onSubmit={onSubmitLoginForm}>
+                    <div className="user-box">
+                            <input type="email" name="email"  value={userLogin.email} onChange={handleInputChange}/>
+                            <label htmlFor="email">Email:</label>
+                        </div>
+                        <div className="user-box">
+                            
+                            <input type="password" name="password"  value={userLogin.password} onChange={handleInputChange}/>
+                            <label htmlFor="password">Mot de passe:</label>
+                        </div>
+                        <input className="submitButton"type="submit" value="Se connecter" />
+                    </form>
                 </div>
-                <div>
-                    <label htmlFor="password">Mot de passe:</label>
-                    <input type="password" name="password"  value={userLogin.password} onChange={handleInputChange}/>
-                </div>
-                <input type="submit" value="Se connecter" />
-            </form>
+            : <p>Vous êtes déjà connecté</p>}
         </>
     )
 }

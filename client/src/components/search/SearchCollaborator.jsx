@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Card from "../card/Card";
+import '../../style/card.css'
+import '../../style/form.css'
 
 const SearchCollaborator = () => {
     
@@ -64,28 +66,28 @@ const SearchCollaborator = () => {
     else 
     {
         return (
-            <div className="wrapper">
-                <div className="search-wrapper">
+            <div className="">
+                <div className="">
                     <label htmlFor="search-form">
                         <input
                             type="search"
                             name="search"
-                            id="search-form"
-                            className="search-input"
+                            id=""
+                            className="t"
                             placeholder="Rechercher"
                             value={q}
                             onChange={(e) => setQ(e.target.value)}
                         />
                         <div>
-                            <span className="sr-only">Rechercher un collaborateur</span>
+                            <span className="">Rechercher un collaborateur</span>
                         </div>
                     </label>
-                    <div className="select">
+                    <div>
                     <select
                             onChange={(e) => {
                                 setFilter(e.target.value);
                             }}
-                            className="custom-select"
+                            className="select"
                             aria-label="Filter Countries By Region"
                         >
                             <option value="All">Tous</option>
@@ -97,7 +99,7 @@ const SearchCollaborator = () => {
                             onChange={(e) => {
                                 setFilterParam(e.target.value);
                             }}
-                            className="custom-select"
+                            className="select"
                             aria-label="Filter Countries By Region"
                         >
                             <option value="All">Tous</option>
@@ -108,13 +110,13 @@ const SearchCollaborator = () => {
                         <span className="focus"></span>
                     </div>
                 </div>
-                <ul className="card-grid">
+                <div className="List-card">
                     {search(data).map((item) => (
-                        <div key={item.id}>
+                        <div className="Card" key={item.id}>
                             <Card collaborator={item}/>
                         </div>
                     ))}
-                </ul>
+                </div>
             </div>
         );
     }

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
+import './../../style/form.css';
 
 const Info = () => {
     const { userSession } = useSelector( state => state.collaboratorReducer );
+
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const [user, setUser] = useState({
         id: '',
@@ -17,6 +20,7 @@ const Info = () => {
         country: '',
         photo: '',
         service: '',
+        isAdmin:userSession.userConnection ? true : false
     })
 
     const civilities = [
@@ -41,11 +45,8 @@ const Info = () => {
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
-
-        const url = `http://localhost:9000/api/collaborateurs/${user.id}`;
+        const url = `http://localhost:9000/api/collaborateurs/${userSession.userConnection.id}`;
         const localToken = localStorage.getItem('token');
-
-        console.log(user);
 
         const options = {
             headers: {
@@ -58,10 +59,19 @@ const Info = () => {
         }
 
         if(checkForm(user) === true)
-        {
-                            
+        {            
             const response = await fetch(url, options)
             const result = await response.json();
+            
+            if(result.success)
+            {
+                alert(result.success);
+            }
+
+            if(result.error)
+            {
+                alert(result.error);
+            }
         }
 
     }
@@ -80,13 +90,30 @@ const Info = () => {
             user.photo.trim().length === 0 ||
             !user.service)
         {
-
+            console.log(user);
+            
             window.alert('Certains champs ne sont pas complétés');
+            return false;
+        }
 
+        if(user.password != confirmPassword)
+        {
+            window.alert('Le mot de passe et sa confirmation sont différents');
+            return false;
+        }
+
+        if(emailIsValid(user.email) ==false)
+        {
+            window.alert('Le format d\'email est incorrect');
             return false;
         }
 
         return true;
+    }
+
+    const emailIsValid = (email) =>
+    {
+        return /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)
     }
 
     const handleInputChange = (event) => {
@@ -106,7 +133,7 @@ const Info = () => {
         const url = `http://localhost:9000/api/collaborateurs/${userSession.userConnection.id}`;
         const localToken = localStorage.getItem('token');
 
-        console.log(user);
+        // console.log(user);
 
         const options = {
             headers: {
@@ -116,13 +143,13 @@ const Info = () => {
             },
             method: "GET"
         }
+        const response = await fetch(url, options)
 
-              
-            const response = await fetch(url, options)
-            const result = await response.json();
-            setUser(result);
-        
-       
+
+        const result = await response.json();
+
+        console.log(result);
+        setUser(result);
     } 
 
     useEffect(() => {
@@ -131,56 +158,65 @@ const Info = () => {
 
     return (
         <>
-            <h3>Informations personnelles</h3>
+        <div className="login-box">
+        <h3>Informations personnelles</h3>
             <form onSubmit={onSubmitForm} method="POST">
-            <select value={user.gender} name="gender" onChange={handleInputChange}>
+            <select  className="select" value={user.gender} name="gender" onChange={handleInputChange}>
                     {optionsCivilities}
                 </select>
-                <select value={user.service} name="service" onChange={handleInputChange}>
+                <select className="select" value={user.service} name="service" onChange={handleInputChange}>
                     {optionsCategories}
                 </select>
-                <div>
-                    <label htmlFor="lastname">Nom:</label>
+                <div className="user-box">
                     <input type="text" name="lastname"  value={user.lastname} onChange={handleInputChange}/>
+                    <label htmlFor="lastname">Nom:</label>
+                    
                 </div>
-                <div>
-                    <label htmlFor="firstname">Prénom:</label>
+                <div className="user-box">
                     <input type="text" name="firstname"  value={user.firstname} onChange={handleInputChange}/>
+                    <label htmlFor="firstname">Prénom:</label>
+                   
                 </div>
-                <div>
-                    <label htmlFor="email">Email:</label>
+                <div className="user-box">
                     <input type="email" name="email"  value={user.email} onChange={handleInputChange}/>
+                    <label htmlFor="email">Email:</label>
+                   
                 </div>
-                <div>
-                    <label htmlFor="password">Mot de passe:</label>
+                <div className="user-box">
                     <input type="password" name="password" value={user.password} onChange={handleInputChange}/>
+                    <label htmlFor="password">Mot de passe:</label>
+                    
                 </div>
-                <div>
-                    <label htmlFor="confirmPassword">Confirmation</label>
-                    <input type="password" name="confirmPassword" value={user.password} onChange={handleInputChange}/>
+                <div className="user-box">
+                    <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                    <label htmlFor="confirmPassword">Confirmation:</label>
                 </div>
-                <div>
-                    <label htmlFor="phone">Téléphone:</label>
+                <div className="user-box">
                     <input type="text" name="phone" value={user.phone} onChange={handleInputChange}/>
+                    <label htmlFor="phone">Téléphone:</label>
+                    
                 </div>           
-                <div>
-                    <label htmlFor="birthdate">Date de naissance:</label>
+                <div className="user-box">
                     <input type="date" name="birthdate" value={user.birthdate} onChange={handleInputChange}/>
+                    <label htmlFor="birthdate">Date de naissance:</label>
+                    
                 </div>                           
-                <div>
-                    <label htmlFor="city">Ville:</label>
+                <div className="user-box">
                     <input type="text" name="city" value={user.city} onChange={handleInputChange}/>
+                    <label htmlFor="city">Ville:</label>
                 </div>                                          
-                <div>
+                <div className="user-box">
+                <input type="text" name="country" value={user.country} onChange={handleInputChange}/>
                     <label htmlFor="country">Pays:</label>
-                    <input type="text" name="country" value={user.country} onChange={handleInputChange}/>
                 </div>
-                <div>
-                    <label htmlFor="photo">Photo:</label>
+                <div className="user-box">
                     <input type="text" name="photo" value={user.photo} onChange={handleInputChange}/>
+                    <label htmlFor="photo">Photo:</label>
                 </div>
-                <input type="submit" value="Modifier" />
+                <input class="submitButton" type="submit" value="Modifier" />
             </form>
+        </div>
+           
         </>
     )
 }

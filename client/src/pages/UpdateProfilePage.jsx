@@ -6,7 +6,9 @@ const updateProfilePage = () => {
 
     const {id} = useParams();
 
-    <UpdateCollaborator id={id}/>
+    return (
+        <UpdateCollaborator id={id}/>
+    )
 }
 
 export default updateProfilePage;

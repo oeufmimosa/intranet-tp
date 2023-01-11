@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const Home = () => {
 
     const [randomCollaborator, setRandomCollaborator] = useState({
@@ -60,9 +61,10 @@ const Home = () => {
                     <p>{randomCollaborator.service}</p>
                     <p>{randomCollaborator.firstname} {randomCollaborator.lastname}</p>
                     <p>{randomCollaborator.country}</p>
-                    <p><a href="">{randomCollaborator.email}</a></p>
-                    <p><a href="">{randomCollaborator.phone}</a></p>
+                    <p><a href={`mailto:${randomCollaborator.email}`}>{randomCollaborator.email}</a></p>
+                    <p><a href={`tel:${randomCollaborator.phone}`}>{randomCollaborator.phone}</a></p>
                     <p>Anniversaire : {localDate}</p>
+                    <p><Link to={`/collaborateur/${randomCollaborator.id}`}>Consulter le profil de {randomCollaborator.firstname} {randomCollaborator.lastname}</Link></p>
                 </div>
             </div>
             <button onClick={onClickRandom}>Dire bonjour à quelqu'un d'autre</button>

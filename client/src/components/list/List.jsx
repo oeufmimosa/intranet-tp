@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Card from "../card/Card";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import '../../style/card.css';
 
 const List = () => {
 
@@ -73,21 +74,24 @@ const List = () => {
     return (
         <>
             <h3>Liste des collaborateurs</h3>
+            <div className="List-card">
                 {!isLoading ? 
-                    collaborators.map(( collaborator ) =>
+                        collaborators.map(( collaborator ) =>
                         <>
+                            <div className="Card">
+                                <Card  key={collaborator.id} collaborator={collaborator}/>
+                                {userSession.userConnection.isAdmin ?          
+                                    <>
+                                        <p><Link to={`/collaborateur/modifier/${collaborator.id}`}>Modifier</Link></p>
+                                        <button onClick={() => onClickDeleteCollaborator(collaborator)}>Supprimer</button> 
+                                    </>
+                                : null}
+                            </div>
+                        </>
+                    ) : 
+                        'Chargement'}
+            </div>
 
-                    <Card  key={collaborator.id} collaborator={collaborator}/>
-                    {userSession.userConnection.isAdmin ?          
-                        <>
-                             <p><Link to={`/collaborateur/modifier/${collaborator.id}`}>Modifier</Link></p>
-                            <button onClick={() => onClickDeleteCollaborator(collaborator)}>Supprimer</button> 
-                        </>
-                    : null}
-                        
-                        </>
-                ) : 
-                    'Chargement'}
         </>
     )
 }

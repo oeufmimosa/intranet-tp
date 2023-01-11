@@ -25,24 +25,33 @@ const App = () => {
     <Router>
 
       <div className="App">
-        {userSession.userConnection ?
-          <>
-            <p><Link to="/infos-personnelles">Bonjour {userSession.userConnection.firstname} {userSession.userConnection.lastname}</Link></p>
-            <p><Link to="/collaborateurs">Liste</Link></p>
-            <p><Link to="/infos-personnelles">Mon profil</Link></p>
-            <p><Link to="/rechercher">Rechercher</Link></p>
-            <DisconnectButton/>
-            {userSession.userConnection.isAdmin ? 
+        <header className="Header">
+          <h1 className="Nav-title">Bienvenue sur l'intranet</h1>
+          <nav className="Nav">
 
-              <p><Link to="/collaborateur/ajouter">Ajouter un collaborateur</Link></p>
+            {userSession.userConnection ?
+              <>
+                  <p className="Nav-link"><Link to="/infos-personnelles">Bonjour {userSession.userConnection.firstname} {userSession.userConnection.lastname}</Link></p>
+                  <img style={{width: "50px", height:'50px'}}src={userSession.userConnection.photo} alt={userSession.userConnection.photo} />
+                  <p className="Nav-link"><Link to="/collaborateurs">Liste</Link></p>
+                  <p className="Nav-link"><Link to="/infos-personnelles">Mon profil</Link></p>
+                  <p className="Nav-link"><Link to="/rechercher">Rechercher</Link></p>
+                  
+                  {userSession.userConnection.isAdmin ? 
+
+                    <p className="Nav-link"><Link to="/collaborateur/ajouter">Ajouter un collaborateur</Link></p>
+                  :
+                    null
+                  }
+                <DisconnectButton/>
+              </>
+
             :
-              null
-            }
-          </>
+              null }
+          </nav>
+        </header>
 
-        :
-
-          null }
+       
           <Routes>
             <Route path="/" element={<LoginPage />}/>
             <Route path="/accueil" element={
