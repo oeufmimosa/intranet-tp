@@ -12,6 +12,9 @@ import ProtectedRoute from './components/protectedRoute/ProtectedRoute';
 import NotFound from './pages/NotFound';
 import InfosPage from './pages/InfosPage';
 import SearchPage from './pages/SearchPage';
+import ProtectedAdminRoute from './components/protectedAdminRoute/ProtectedAdminRoute';
+import UpdateProfilePage from './pages/UpdateProfilePage';
+import AddCollaboratorPage from './pages/AddCollaboratorPage';
 
 const App = () => {
 
@@ -29,11 +32,17 @@ const App = () => {
             <p><Link to="/infos-personnelles">Mon profil</Link></p>
             <p><Link to="/rechercher">Rechercher</Link></p>
             <DisconnectButton/>
+            {userSession.userConnection.isAdmin ? 
+
+              <p><Link to="/collaborateur/ajouter">Ajouter un collaborateur</Link></p>
+            :
+              null
+            }
           </>
 
         :
+
           null }
-        
           <Routes>
             <Route path="/" element={<LoginPage />}/>
             <Route path="/accueil" element={
@@ -56,6 +65,18 @@ const App = () => {
               <ProtectedRoute>
                 <SearchPage/>
               </ProtectedRoute>}/>
+              <Route path="/collaborateur/modifier/:id" element={
+                <ProtectedRoute>
+                  <ProtectedAdminRoute>
+                    <UpdateProfilePage/>
+                  </ProtectedAdminRoute>
+                </ProtectedRoute>}/>
+              <Route path="/collaborateur/ajouter" element={
+                 <ProtectedRoute>
+                  <ProtectedAdminRoute>
+                    <AddCollaboratorPage/>
+                  </ProtectedAdminRoute>
+               </ProtectedRoute>}/>
               <Route path="*" element={<NotFound/>}/>
           </Routes>
       </div>

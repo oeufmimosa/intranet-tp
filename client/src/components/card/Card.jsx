@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Card = ( {collaborator }) => {
+
+const Card = ({ collaborator }) => {
 
     const {firstname, lastname, email, phone, city, country, photo, id} = collaborator
     

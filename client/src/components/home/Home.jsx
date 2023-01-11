@@ -41,7 +41,6 @@ const Home = () => {
         getRandomCollaborator()
     }
 
-
     useEffect( () => {
         getRandomCollaborator()
     }, [])

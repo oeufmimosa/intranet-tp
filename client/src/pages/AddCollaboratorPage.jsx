@@ -1,33 +1,30 @@
-import { useState } from "react"
-
 import { useSelector } from "react-redux"
+import { useState, useEffect } from "react";
 
-const InfosPage = () => {
-    
-    const { userSession } = useSelector( state => state.collaboratorReducer );
+const AddCollaboratorPage = () => {
 
-    const [user, setUser] = useState({
-        id: userSession.userConnection.id,
-        gender: userSession.userConnection.civility,
-        firstname: userSession.userConnection.firstname,
-        lastname: userSession.userConnection.lastname,
-        email: userSession.userConnection.email,
-        password: userSession.userConnection.password,
-        phone: userSession.userConnection.phone,
-        birthdate: userSession.userConnection.birthdate,
-        city: userSession.userConnection.city,
-        country: userSession.userConnection.country,
-        photo: userSession.userConnection.photo,
-        service: userSession.userConnection.service,
-        isAdmin: userSession.userConnection.isAdmin
+    const [civility, setCivility] = useState('female')
+    const [category, setCategory] = useState('Marketing')
+
+    const [collaborator, setCollaborator] = useState({
+        id: '',
+        gender: '',
+        firstname: '',
+        lastname:'',
+        email: '',
+        password: '',
+        phone: '',
+        birthdate: '',
+        city: '',
+        country: '',
+        photo: '',
+        service: '',
+        isAdmin: false
     })
 
-    const [civility, setCivility] = useState(user.gender ? 'female' : 'male')
-    const [category, setCategory] = useState(user.service ? 'Marketing' : 'Technique')
-
     const civilities = [
-        {value: "male", text: "Homme"}, 
         {value: "female", text: "Femme"}, 
+        {value: "male", text: "Homme"}, 
       ]
 
     const categories = [
@@ -37,6 +34,7 @@ const InfosPage = () => {
     ]
 
     const optionsCivilities = civilities.map((option, i) => {
+
         return <option key={i} value={option.value}>{option.text}</option>
     })
 
@@ -47,10 +45,12 @@ const InfosPage = () => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        user.gender = civility;
-        user.service = category;
+        collaborator.gender = civility;
+        collaborator.service = category;
 
-        const url = `http://localhost:9000/api/collaborateurs/${user.id}`;
+        console.log(collaborator);
+
+        const url = `http://localhost:9000/api/collaborateurs`;
         const localToken = localStorage.getItem('token');
 
         const options = {
@@ -59,17 +59,15 @@ const InfosPage = () => {
                 'Content-Type': 'application/json',
                 'Authorization': localToken
             },
-            method: "PUT",
-            body: JSON.stringify(user)
+            method: "POST",
+            body: JSON.stringify(collaborator)
         }
-
-        if(checkForm(user) === true)
+        
+        if(checkForm(collaborator) === true)
         {
-                            
             const response = await fetch(url, options)
             const result = await response.json();
         }
-
     }
 
     const checkForm = (user) => {
@@ -86,9 +84,9 @@ const InfosPage = () => {
             user.photo.trim().length === 0 ||
             !user.service)
         {
-
+            console.log(user);
+            
             window.alert('Certains champs ne sont pas complétés');
-
             return false;
         }
 
@@ -99,69 +97,80 @@ const InfosPage = () => {
         
         const {value, name} = event.target
 
-        const updateUser = {
-            ...user,
+        const updatecollaborator = {
+            ...collaborator,
             [name]: value
         }
 
-        setUser(updateUser);
+        console.log(value);
+
+        setCollaborator(updatecollaborator);
+    }
+
+    const checkButtonAdmin = (event) => {
+
+        collaborator.isAdmin = event.target.checked;
     }
 
     return (
         <>
-            <h3>Informations personnelles</h3>
+            <h3>Ajouter un collaborateur</h3>
             <form onSubmit={onSubmitForm} method="POST">
-                <select value={civility} onChange={(e) => setCivility(e.target.value)}>
+                <select value={civility} name="gender" onChange={(e) => setCivility(e.target.value)}>
                     {optionsCivilities}
                 </select>
 
-                <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                <select value={category} name="category" onChange={(e) => setCategory(e.target.value)}>
                     {optionsCategories}
                 </select>
                 <div>
                     <label htmlFor="lastname">Nom:</label>
-                    <input type="text" name="lastname"  value={user.lastname} onChange={handleInputChange}/>
+                    <input type="text" name="lastname"  value={collaborator.lastname} onChange={handleInputChange}/>
                 </div>
                 <div>
                     <label htmlFor="firstname">Prénom:</label>
-                    <input type="text" name="firstname"  value={user.firstname} onChange={handleInputChange}/>
+                    <input type="text" name="firstname"  value={collaborator.firstname} onChange={handleInputChange}/>
                 </div>
                 <div>
                     <label htmlFor="email">Email:</label>
-                    <input type="email" name="email"  value={user.email} onChange={handleInputChange}/>
+                    <input type="email" name="email"  value={collaborator.email} onChange={handleInputChange}/>
                 </div>
                 <div>
                     <label htmlFor="password">Mot de passe:</label>
-                    <input type="password" name="password" value={user.password} onChange={handleInputChange}/>
+                    <input type="password" name="password" value={collaborator.password} onChange={handleInputChange}/>
                 </div>
                 <div>
                     <label htmlFor="confirmPassword">Confirmation</label>
-                    <input type="password" name="confirmPassword" value={user.password} onChange={handleInputChange}/>
+                    <input type="password" name="confirmPassword" value={collaborator.password} onChange={handleInputChange}/>
                 </div>
                 <div>
                     <label htmlFor="phone">Téléphone:</label>
-                    <input type="text" name="phone" value={user.phone} onChange={handleInputChange}/>
+                    <input type="text" name="phone" value={collaborator.phone} onChange={handleInputChange}/>
                 </div>           
                 <div>
                     <label htmlFor="birthdate">Date de naissance:</label>
-                    <input type="date" name="birthdate" value={user.birthdate} onChange={handleInputChange}/>
+                    <input type="date" name="birthdate" value={collaborator.birthdate} onChange={handleInputChange}/>
                 </div>                           
                 <div>
                     <label htmlFor="city">Ville:</label>
-                    <input type="text" name="city" value={user.city} onChange={handleInputChange}/>
+                    <input type="text" name="city" value={collaborator.city} onChange={handleInputChange}/>
                 </div>                                          
                 <div>
                     <label htmlFor="country">Pays:</label>
-                    <input type="text" name="country" value={user.country} onChange={handleInputChange}/>
+                    <input type="text" name="country" value={collaborator.country} onChange={handleInputChange}/>
                 </div>
                 <div>
                     <label htmlFor="photo">Photo:</label>
-                    <input type="text" name="photo" value={user.photo} onChange={handleInputChange}/>
+                    <input type="text" name="photo" value={collaborator.photo} onChange={handleInputChange}/>
                 </div>
-                <input type="submit" value="Modifier" />
+                <div>
+                    <label htmlFor="isAdmin">Administrateur ? :</label>
+                    <input type="checkbox" name="isAdmin" value={collaborator.isAdmin} onChange={checkButtonAdmin}/>
+                </div>
+                <input type="submit" value="Ajouter" />
             </form>
         </>
     )
 }
 
-export default InfosPage;
+export default AddCollaboratorPage;

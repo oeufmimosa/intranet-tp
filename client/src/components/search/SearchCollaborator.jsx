@@ -10,6 +10,8 @@ const SearchCollaborator = () => {
     const [filterParam, setFilterParam] = useState("All");
     const [filter, setFilter] = useState("All");
 
+    const data = Object.values(items);
+
     const fetchCollaborators = async () => {
         const url = 'http://localhost:9000/api/collaborateurs'
         const localToken = localStorage.getItem('token');
@@ -30,8 +32,6 @@ const SearchCollaborator = () => {
     useEffect(() => {
         fetchCollaborators()
     }, []);
-
-    const data = Object.values(items);
 
     const search = (items) => {
         return items
