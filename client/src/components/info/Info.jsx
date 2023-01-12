@@ -174,12 +174,21 @@ const Info = () => {
         <div className="login-box">
         <h3>Informations personnelles</h3>
             <form onSubmit={onSubmitForm} method="POST">
-            <select  className="select" value={user.gender} name="gender" onChange={handleInputChange}>
-                    {optionsCivilities}
-                </select>
-                <select className="select" value={user.service} name="service" onChange={handleInputChange}>
-                    {optionsCategories}
-                </select>
+                <div className="user-box">
+                    <label htmlFor="gender">Genre: </label>
+                    <select  className="select" value={user.gender} name="gender" onChange={handleInputChange}>
+                        <option value=""></option>
+                        {optionsCivilities}
+                    </select>
+                </div>
+                <div className="user-box">
+                    <label htmlFor="gender">Service: </label>
+                    <select className="select" value={user.service} name="service" onChange={handleInputChange}>
+                        <option value=""></option>
+                        {optionsCategories}
+                    </select>
+                </div>
+                <br />
                 <div className="user-box">
                     <input type="text" name="lastname"  value={user.lastname} onChange={handleInputChange}/>
                     <label htmlFor="lastname">Nom:</label>

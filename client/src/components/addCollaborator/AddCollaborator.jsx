@@ -40,7 +40,7 @@ const AddCollaborator = () => {
 
     // Fonction qui renvoie la liste des options de genres.
     const optionsCivilities = civilities.map((option, i) => {
-
+                
         return <option key={i} value={option.value}>{option.text}</option>
     })
 
@@ -159,13 +159,21 @@ const AddCollaborator = () => {
             <div className="login-box">
                 <h3>Ajouter un collaborateur</h3>
                 <form onSubmit={onSubmitForm} method="POST">
-                    <select className="select" value={collaborator.gender} name="gender" onChange={handleInputChange}>
-                        {optionsCivilities}
-                    </select>
-
-                    <select className="select" value={collaborator.service} name="service" onChange={handleInputChange}>
-                        {optionsCategories}
-                    </select>
+                    <div className="user-box">
+                        <label htmlFor="gender">Genre: </label>
+                        <select className="select" value={collaborator.gender} name="gender" onChange={handleInputChange}>
+                            <option value=""></option>
+                            {optionsCivilities}
+                        </select>
+                    </div>
+                    <div className="user-box">
+                    <label htmlFor="service">Service: </label>
+                        <select className="select" value={collaborator.service} name="service" onChange={handleInputChange}>
+                            <option value=""></option>
+                            {optionsCategories}
+                        </select>
+                    </div>
+                    <br />
                     <div className="user-box">
                         <input type="text" name="lastname"  value={collaborator.lastname} onChange={handleInputChange}/>    
                         <label htmlFor="lastname">Nom:</label>
@@ -217,7 +225,6 @@ const AddCollaborator = () => {
                     <div className="user-box">
                     <input type="checkbox" name="isAdmin" value={collaborator.isAdmin} onChange={checkButtonAdmin}/>
                         <label htmlFor="isAdmin">Administrateur ? :</label>
-                    
                     </div>
                     <input className="submitButton" type="submit" value="Ajouter" />
                 </form>

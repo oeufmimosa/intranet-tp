@@ -5,7 +5,6 @@ import './../../style/form.css';
 
 const UpdateCollaborator = ( props ) => {
 
-
     const { id } = props;
     
     // State initial du collaborateur.
@@ -160,6 +159,12 @@ const UpdateCollaborator = ( props ) => {
         setCollaborator(updatecollaborator);
     }
 
+        // On vérifie la checkbox admin.
+        const checkButtonAdmin = (event) => {
+
+            collaborator.isAdmin = event.target.checked;
+        }
+
     useEffect(() => {
         fetchCollaborator()
     }, [])
@@ -169,13 +174,21 @@ const UpdateCollaborator = ( props ) => {
         <div className="login-box">   
         <h3>Modifier un collaborateur</h3>
             <form onSubmit={onSubmitForm} method="POST">
-                <select className="select" value={collaborator.gender} name="gender" onChange={handleInputChange}>
-                    {optionsCivilities}
-                </select>
-
-                <select className="select" value={collaborator.service} name="service" onChange={handleInputChange}>
-                    {optionsCategories}
-                </select>
+                <div className="user-box">
+                    <label htmlFor="gender">Genre: </label>
+                    <select className="select" value={collaborator.gender} name="gender" onChange={handleInputChange}>
+                        <option value=""></option>
+                        {optionsCivilities}
+                    </select>
+                </div>
+                <div className="user-box">
+                <label htmlFor="service">Service: </label>
+                    <select className="select" value={collaborator.service} name="service" onChange={handleInputChange}>
+                        <option value=""></option>
+                        {optionsCategories}
+                    </select>
+                </div>
+                <br />
                 <div className="user-box">
                     <input type="text" name="lastname"  value={collaborator.lastname} onChange={handleInputChange}/>
                     <label htmlFor="lastname">Nom:</label>
@@ -222,6 +235,10 @@ const UpdateCollaborator = ( props ) => {
                 <div className="user-box">
                     <input type="text" name="photo" value={collaborator.photo} onChange={handleInputChange}/>
                     <label htmlFor="photo">Photo:</label>
+                </div>
+                <div className="user-box">
+                <input type="checkbox" name="isAdmin" value={collaborator.isAdmin} onChange={checkButtonAdmin}/>
+                        <label htmlFor="isAdmin">Administrateur ? :</label>
                 </div>
                 <input className="submitButton" type="submit" value="Modifier" />
             </form>

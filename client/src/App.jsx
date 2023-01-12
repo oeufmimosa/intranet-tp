@@ -49,7 +49,6 @@ const App = () => {
                   }
                 <DisconnectButton/>
               </>
-
             :
               null }
           </nav>

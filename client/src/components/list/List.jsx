@@ -82,9 +82,8 @@ const List = () => {
             <div className="List-card">
                 {!isLoading ? 
                         collaborators.map(( collaborator ) =>
-                        <>
-                            <div className="Card">
-                                <Card  key={collaborator.id} collaborator={collaborator}/>
+                            <div key={collaborator.id} className="Card">
+                                <Card collaborator={collaborator}/>
                                 {/* Si l'utilisateur est l'admin on affiche les liens de modification et le bouton de suppression. */}
                                 {userSession.userConnection.isAdmin ?          
                                     <>
@@ -93,7 +92,6 @@ const List = () => {
                                     </>
                                 : null}
                             </div>
-                        </>
                     ) : 
                         'Chargement'}
             </div>
