@@ -15,7 +15,7 @@ const Card = ({ collaborator }) => {
                 <img style={{borderRadius:'100%'}}src={photo} alt={`${firstname}-${lastname}`} />
             </div>
             <div>
-                <p>{firstname} {lastname}</p>
+                <strong>{firstname} {lastname}</strong>
                 <p>Email : {email}</p>
                 <p>{city}, {country}</p>
                 <p>Téléphone: {phone}</p>

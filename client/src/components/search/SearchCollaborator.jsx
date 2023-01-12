@@ -62,20 +62,24 @@ const SearchCollaborator = () => {
         fetchCollaborators()
     }, []);
 
+    // Fonction de rechercher récupérant la liste des collaborateurs. 
     const search = (items) => {
         return items
           .filter(
+            // Le filtre doit être différent de all, et correspondre au service choisi. Ou alors on laisse le filtre par défaut sur All.
             (item) => (filterParam !== "All" && item.service == filterParam) || filterParam == "All"
           )
           .filter(
+            // Le fitre doit être différent de All et ce qui est entré en barre de recherche doit correspondre à la ville, ou au pays, au prénom, au nom et le filtre doit être le select correspondant.
             (item) => (filter !== "All" && (
-                item.city == q && filter == 'city' || 
-                item.country == q && filter == 'country' ||
-                item.firstname == q && filter == 'firstname' ||
-                item.lastname == q && filter == 'lastname'
+                item.city.toLowerCase().trim() == q.toLowerCase().trim() && filter == 'city' || 
+                item.country.toLowerCase().trim() == q.toLowerCase().trim() && filter == 'country' ||
+                item.firstname.toLowerCase().trim() == q.toLowerCase().trim() && filter == 'firstname' ||
+                item.lastname.toLowerCase().trim() == q.toLowerCase().trim() && filter == 'lastname'
             )) || filter == "All"
           )
           .filter(
+            // Le filtre doit s'effectuer sur tous les éléments entrés dans la barre de recherche.
             (item) => `${item.firstname} ${item.lastname} ${item.city} ${item.country} `.toLowerCase().includes( q.toLowerCase())
           )
     }
