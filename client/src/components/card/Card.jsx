@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 const Card = ({ collaborator }) => {
 
     // On déstructure le paramètre collaborator et on récupère ses différentes propriétés.
-    const {firstname, lastname, email, phone, city, country, photo, id, service} = collaborator
+    const {firstname, lastname, email, phone, city, country, photo, id, service, birthdate} = collaborator
+
+    const date = new Date(birthdate)
+    const localDate = date.toLocaleDateString()
     
     return (
         <>
@@ -17,6 +20,7 @@ const Card = ({ collaborator }) => {
                 <p>{city}, {country}</p>
                 <p>Téléphone: {phone}</p>
                 <p>Service: {service}</p>
+                <p>Anniversaire: {localDate}</p>
                 <p><Link to={`/collaborateur/${id}`}>Voir</Link></p>
             </div>
         </>
