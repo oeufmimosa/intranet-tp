@@ -101,7 +101,7 @@ const Login = () => {
                 <div className="login-box">
                     <h3 >Connexion</h3>
                     <form method="POST" onSubmit={onSubmitLoginForm}>
-                    <div className="user-box">
+                        <div className="user-box">
                             <input type="email" name="email"  value={userLogin.email} onChange={handleInputChange}/>
                             <label htmlFor="email">Email:</label>
                         </div>

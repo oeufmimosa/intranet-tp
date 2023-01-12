@@ -82,7 +82,6 @@ const Info = () => {
                 alert(result.error);
             }
         }
-
     }
 
     // Fonction de vérification du formulaire.
@@ -146,8 +145,6 @@ const Info = () => {
         const url = `http://localhost:9000/api/collaborateurs/${userSession.userConnection.id}`;
         const localToken = localStorage.getItem('token');
 
-        // console.log(user);
-
         const options = {
             headers: {
                 'Accept': 'application/json',
@@ -157,11 +154,8 @@ const Info = () => {
             method: "GET"
         }
         const response = await fetch(url, options)
-
-
         const result = await response.json();
 
-        console.log(result);
         setUser(result);
     } 
 
@@ -192,22 +186,18 @@ const Info = () => {
                 <div className="user-box">
                     <input type="text" name="lastname"  value={user.lastname} onChange={handleInputChange}/>
                     <label htmlFor="lastname">Nom:</label>
-                    
                 </div>
                 <div className="user-box">
                     <input type="text" name="firstname"  value={user.firstname} onChange={handleInputChange}/>
                     <label htmlFor="firstname">Prénom:</label>
-                   
                 </div>
                 <div className="user-box">
                     <input type="email" name="email"  value={user.email} onChange={handleInputChange}/>
                     <label htmlFor="email">Email:</label>
-                   
                 </div>
                 <div className="user-box">
                     <input type="password" name="password" value={user.password} onChange={handleInputChange}/>
                     <label htmlFor="password">Mot de passe:</label>
-                    
                 </div>
                 <div className="user-box">
                     <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
@@ -216,26 +206,24 @@ const Info = () => {
                 <div className="user-box">
                     <input type="text" name="phone" value={user.phone} onChange={handleInputChange}/>
                     <label htmlFor="phone">Téléphone:</label>
-                    
                 </div>           
                 <div className="user-box">
                     <input type="date" name="birthdate" value={user.birthdate} onChange={handleInputChange}/>
                     <label htmlFor="birthdate">Date de naissance:</label>
-                    
                 </div>                           
                 <div className="user-box">
                     <input type="text" name="city" value={user.city} onChange={handleInputChange}/>
                     <label htmlFor="city">Ville:</label>
                 </div>                                          
                 <div className="user-box">
-                <input type="text" name="country" value={user.country} onChange={handleInputChange}/>
+                    <input type="text" name="country" value={user.country} onChange={handleInputChange}/>
                     <label htmlFor="country">Pays:</label>
                 </div>
                 <div className="user-box">
                     <input type="text" name="photo" value={user.photo} onChange={handleInputChange}/>
                     <label htmlFor="photo">Photo:</label>
                 </div>
-                <input class="submitButton" type="submit" value="Modifier" />
+                <input className="submitButton" type="submit" value="Modifier" />
             </form>
         </div>
            

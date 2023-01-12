@@ -192,41 +192,34 @@ const UpdateCollaborator = ( props ) => {
                 <div className="user-box">
                     <input type="text" name="lastname"  value={collaborator.lastname} onChange={handleInputChange}/>
                     <label htmlFor="lastname">Nom:</label>
-                    
                 </div>
                 <div className="user-box">
                     <input type="text" name="firstname"  value={collaborator.firstname} onChange={handleInputChange}/>
                     <label htmlFor="firstname">Prénom:</label>
-                    
                 </div>
                 <div className="user-box">
                     <input type="email" name="email"  value={collaborator.email} onChange={handleInputChange}/>
                     <label htmlFor="email">Email:</label>
-                    
                 </div>
                 <div className="user-box">
                     <input type="password" name="password" value={collaborator.password} onChange={handleInputChange}/>
                     <label htmlFor="password">Mot de passe:</label>
-                    
                 </div>
                 <div className="user-box">
-                        <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
-                        <label htmlFor="confirmPassword">Confirmation:</label>
+                    <input type="password" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+                    <label htmlFor="confirmPassword">Confirmation:</label>
                 </div>
                 <div className="user-box">
                     <input type="text" name="phone" value={collaborator.phone} onChange={handleInputChange}/>
                     <label htmlFor="phone">Téléphone:</label>
-                    
                 </div>           
                 <div className="user-box">
                     <input type="date" name="birthdate" value={collaborator.birthdate} onChange={handleInputChange}/>   
                     <label htmlFor="birthdate">Date de naissance:</label>
-                    
                 </div>                           
                 <div className="user-box">
                     <input type="text" name="city" value={collaborator.city} onChange={handleInputChange}/>
                     <label htmlFor="city">Ville:</label>
-                    
                 </div>                                          
                 <div className="user-box">
                     <input type="text" name="country" value={collaborator.country} onChange={handleInputChange}/>
@@ -237,8 +230,8 @@ const UpdateCollaborator = ( props ) => {
                     <label htmlFor="photo">Photo:</label>
                 </div>
                 <div className="user-box">
-                <input type="checkbox" name="isAdmin" value={collaborator.isAdmin} onChange={checkButtonAdmin}/>
-                        <label htmlFor="isAdmin">Administrateur ? :</label>
+                    <input type="checkbox" name="isAdmin" value={collaborator.isAdmin} onChange={checkButtonAdmin}/>
+                    <label htmlFor="isAdmin">Administrateur ? :</label>
                 </div>
                 <input className="submitButton" type="submit" value="Modifier" />
             </form>
