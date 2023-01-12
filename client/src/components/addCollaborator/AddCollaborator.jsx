@@ -127,6 +127,12 @@ const AddCollaborator = () => {
             return false;
         }
 
+        if(user.password.trim().length < 8)
+        {
+            alert('Le mot de passe doit contenir au moins 8 caractères');
+            return false;
+        }
+
         return true;
     }
     

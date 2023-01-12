@@ -5,8 +5,6 @@ import './../../style/form.css';
 const Info = () => {
     const { userSession } = useSelector( state => state.collaboratorReducer );
 
-    const [confirmPassword, setConfirmPassword] = useState('');
-
     // State initial du user.
     const [user, setUser] = useState({
         id: '',
@@ -21,8 +19,10 @@ const Info = () => {
         country: '',
         photo: '',
         service: '',
-        isAdmin:userSession.userConnection ? true : false
+        isAdmin:userSession.userConnection.isAdmin ? true : false
     })
+
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     // Tableau d'objets de genres.
     const civilities = [
@@ -82,6 +82,7 @@ const Info = () => {
                 alert(result.error);
             }
         }
+
     }
 
     // Fonction de vérification du formulaire.
@@ -115,6 +116,12 @@ const Info = () => {
         if(emailIsValid(user.email) ==false)
         {
             window.alert('Le format d\'email est incorrect');
+            return false;
+        }
+
+        if(user.password.trim().length < 8)
+        {
+            alert('Le mot de passe doit contenir au moins 8 caractères');
             return false;
         }
 
@@ -176,7 +183,7 @@ const Info = () => {
                     </select>
                 </div>
                 <div className="user-box">
-                    <label htmlFor="gender">Service: </label>
+                    <label htmlFor="service">Service: </label>
                     <select className="select" value={user.service} name="service" onChange={handleInputChange}>
                         <option value=""></option>
                         {optionsCategories}
@@ -196,7 +203,7 @@ const Info = () => {
                     <label htmlFor="email">Email:</label>
                 </div>
                 <div className="user-box">
-                    <input type="password" name="password" value={user.password} onChange={handleInputChange}/>
+                    <input type="password" name="password" value={user.password ? user.password : ''} onChange={handleInputChange}/>
                     <label htmlFor="password">Mot de passe:</label>
                 </div>
                 <div className="user-box">

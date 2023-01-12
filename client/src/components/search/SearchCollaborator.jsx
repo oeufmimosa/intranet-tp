@@ -30,6 +30,33 @@ const SearchCollaborator = () => {
         setItems(results);
         setIsLoaded(true);
     }
+        // Tableau d'objets d'informations.
+        const informationsOptions = [
+            {value: "All", text: "Tous"}, 
+            {value: "firstname", text: "Prénom"}, 
+            {value: "lastname", text: "Nom"}, 
+            {value: "city", text: "Ville"}, 
+            {value: "country", text: "Pays"}, 
+          ]
+    
+        // Tableau d'objets de catégories.
+        const categoriesOptions = [
+            {value: "All", text: "Tous"}, 
+            {value:'Marketing', text:'Marketing'},
+            {value:'Technique', text:'Technique'},
+            {value:'Client', text:'Client'}
+        ]
+    
+        // Fonction qui renvoie la liste des options de genres.
+        const optionsInformations = informationsOptions.map((option, i) => {
+                    
+            return <option key={i} value={option.value}>{option.text}</option>
+        })
+    
+        // Fonction qui renvoie la liste des catégories.
+        const optionsCategories = categoriesOptions.map((option, i) => {
+            return <option key={i} value={option.value}>{option.text}</option>
+        })
 
     useEffect(() => {
         fetchCollaborators()
@@ -70,6 +97,10 @@ const SearchCollaborator = () => {
         return (
             <div className="">
                 <div className="">
+                    <div>
+                        <span className="">Rechercher un collaborateur</span>
+                    </div>
+                    <br />
                     <label htmlFor="search-form">
                         <input
                             type="search"
@@ -79,40 +110,32 @@ const SearchCollaborator = () => {
                             placeholder="Rechercher"
                             value={q}
                             onChange={(e) => setQ(e.target.value)}
+                            style={{fontSize:'16px'}}
                         />
-                        <div>
-                            <span className="">Rechercher un collaborateur</span>
-                        </div>
                     </label>
+                    <br />
+                    <br />
                     <div>
-                    <select
+                        <select
                             onChange={(e) => {
                                 setFilter(e.target.value);
                             }}
                             className="select"
-                            aria-label="Filter Countries By Region"
                         >
-                            <option value="All">Tous</option>
-                            <option value="firstname">Prénom</option>
-                            <option value="lastname">Nom</option>
-                            <option value="city">Ville</option>
-                            <option value="country">Pays</option>
+                            {optionsInformations}
                         </select>
                         <select
                             onChange={(e) => {
                                 setFilterParam(e.target.value);
                             }}
                             className="select"
-                            aria-label="Filter Countries By Region"
                         >
-                            <option value="All">Tous</option>
-                            <option value="Technique">Technique</option>
-                            <option value="Marketing">Marketing</option>
-                            <option value="Client">Client</option>
+                            {optionsCategories}
                         </select>
                         <span className="focus"></span>
                     </div>
                 </div>
+                <br />
                 <div className="List-card">
                     {search(data).map((item) => (
                         <div className="Card" key={item.id}>

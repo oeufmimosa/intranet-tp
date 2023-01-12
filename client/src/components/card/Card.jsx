@@ -12,7 +12,7 @@ const Card = ({ collaborator }) => {
     return (
         <>
             <div>
-                <img src={photo} alt={`${firstname}-${lastname}`} />
+                <img style={{borderRadius:'100%'}}src={photo} alt={`${firstname}-${lastname}`} />
             </div>
             <div>
                 <p>{firstname} {lastname}</p>
