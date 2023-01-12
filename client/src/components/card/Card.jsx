@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 
+// Composant Card
 const Card = ({ collaborator }) => {
 
+    // On déstructure le paramètre collaborator et on récupère ses différentes propriétés.
     const {firstname, lastname, email, phone, city, country, photo, id} = collaborator
     
     return (
         <>
             <div>
-                <img src={photo} alt="" />
+                <img src={photo} alt={`${firstname}-${lastname}`} />
             </div>
             <div>
                 <p>{firstname} {lastname}</p>

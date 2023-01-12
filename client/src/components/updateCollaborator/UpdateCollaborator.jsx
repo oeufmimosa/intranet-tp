@@ -8,6 +8,7 @@ const UpdateCollaborator = ( props ) => {
 
     const { id } = props;
     
+    // State initial du collaborateur.
     const [collaborator, setCollaborator] = useState({
         id: '',
         gender: '',
@@ -26,8 +27,10 @@ const UpdateCollaborator = ( props ) => {
 
     const [isLoading, setIsLoading] = useState(true);
 
+     // State pour la confirmation du mot de passe.
     const [confirmPassword, setConfirmPassword] = useState('');
     
+    // On récupère les informations de l'utilisateur courant.
     const fetchCollaborator = async () => {
 
         const url = `http://localhost:9000/api/collaborateurs/${id}`;
@@ -46,26 +49,30 @@ const UpdateCollaborator = ( props ) => {
 
     }
 
+    // Tableau d'objets de genres.
     const civilities = [
         {value: "male", text: "Homme"}, 
         {value: "female", text: "Femme"}, 
       ]
 
+    // Tableau d'objets de catégories.
     const categories = [
         {value:'Marketing', text:'Marketing'},
         {value:'Technique', text:'Technique'},
         {value:'Client', text:'Client'}
     ]
 
+    // Fonction qui renvoie la liste des options de genres.
     const optionsCivilities = civilities.map((option, i) => {
         return <option key={i} value={option.value}>{option.text}</option>
     })
 
-    
+    // Fonction qui renvoie la liste des catégories.
     const optionsCategories = categories.map((option, i) => {
         return <option key={i} value={option.value}>{option.text}</option>
     })
 
+    // Fonction pour la soumission du formulaire
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
@@ -99,7 +106,7 @@ const UpdateCollaborator = ( props ) => {
         }
     }
 
-
+    // Fonction de vérification du formulaire.
     const checkForm = (user) => {
         
         if(!user.gender ||
@@ -114,16 +121,19 @@ const UpdateCollaborator = ( props ) => {
             user.photo.trim().length === 0 ||
             !user.service)
         {
+            // On affiche erreur et un retourne false.
             window.alert('Certains champs ne sont pas complétés');
             return false;
         }
 
+        // Si le mot de passe entré et sa confirmation sont différents.
         if(user.password != confirmPassword)
         {
             window.alert('Le mot de passe et sa confirmation sont différents');
             return false;
         }
 
+        // Si l'email est invalide.
         if(emailIsValid(user.email) == false)
         {
             window.alert('Le format d\'email est incorrect');
@@ -138,6 +148,8 @@ const UpdateCollaborator = ( props ) => {
         return /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)
     }
 
+    
+     // Pour chaque champ du formulaire à l'événement change, on met à jour le state et la clé correspondnate et on l'assigne au state.
     const handleInputChange = (event) => {
         
         const {value, name} = event.target

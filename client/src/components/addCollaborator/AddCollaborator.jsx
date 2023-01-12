@@ -4,6 +4,8 @@ import { useState } from "react";
 import './../../style/form.css';
 
 const AddCollaborator = () => {
+    
+    // State initial du collaborateur.
     const [collaborator, setCollaborator] = useState({
         id: '',
         gender: '',
@@ -20,37 +22,44 @@ const AddCollaborator = () => {
         isAdmin: false
     })
 
+    // State pour la confirmation du mot de passe.
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    console.log(confirmPassword);
-
+    // Tableau d'objets de genres.
     const civilities = [
         {value: "female", text: "Femme"}, 
         {value: "male", text: "Homme"}, 
       ]
 
+    // Tableau d'objets de catégories.
     const categories = [
         {value:'Marketing', text:'Marketing'},
         {value:'Technique', text:'Technique'},
         {value:'Client', text:'Client'}
     ]
 
+    // Fonction qui renvoie la liste des options de genres.
     const optionsCivilities = civilities.map((option, i) => {
 
         return <option key={i} value={option.value}>{option.text}</option>
     })
 
-    
+    // Fonction qui renvoie la liste des catégories.
     const optionsCategories = categories.map((option, i) => {
         return <option key={i} value={option.value}>{option.text}</option>
     })
 
+    // Fonction pour la soumission du formulaire
     const onSubmitForm = async (e) => {
+
+        // On stoppe le comportement par défaut du navigateur qui va rafraîchir la page..
         e.preventDefault();
 
+        // On indique l'URL à interroger côté serveur et on récupère le token stocké dans le navigateur.
         const url = `http://localhost:9000/api/collaborateurs`;
         const localToken = localStorage.getItem('token');
 
+        // On créé un objet d'options contenant les headers, la méthode, et l'objet à envoyer sur le serveur Node.js
         const options = {
             headers: {
                 'Accept': 'application/json',
@@ -61,11 +70,14 @@ const AddCollaborator = () => {
             body: JSON.stringify(collaborator)
         }
         
+        // Si la fonction checkForm renvoie true
         if(checkForm(collaborator) === true)
         {
+            // On lance la requête asyncrhone avec la fonction fetch et avec les options. On récupère la réponse du serveur Node.js
             const response = await fetch(url, options)
             const result = await response.json();
 
+            // Si la réponse contient une clé success on affiche le message, sinon on affiche le message d'erreur.
             if(result.success)
             {
                 alert(result.success);
@@ -78,8 +90,10 @@ const AddCollaborator = () => {
         }
     }
 
+    // Fonction de vérification du formulaire.
     const checkForm = (user) => {
         
+        // Si un des champs est vide...
         if(!user.gender ||
             user.firstname.trim().length === 0 ||
             user.lastname.trim().length === 0 ||
@@ -92,18 +106,23 @@ const AddCollaborator = () => {
             user.photo.trim().length === 0 ||
             !user.service)
         {
+            // On affiche erreur et un retourne false.
             window.alert('Certains champs ne sont pas complétés');
             return false;
         }
 
+        // Si le mot de passe entré et sa confirmation sont différents.
         if(user.password != confirmPassword)
         {
+            // On affiche une alerte et on retourne false.
             window.alert('Le mot de passe et sa confirmation sont différents');
             return false;
         }
         
+        // Si l'email est invalide.
         if(emailIsValid(user.email) == false)
         {
+            // On affiche une alerte et un retourne false.
             window.alert('Le format d\'email est incorrect');
             return false;
         }
@@ -111,10 +130,12 @@ const AddCollaborator = () => {
         return true;
     }
     
+    // Fonction utilisant les regex afin de vérifier si la chaîne de caractère correspond à un email. Elle renvoie un booléen.
     const emailIsValid = (email) => {
         return /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)
     }
 
+    // Pour chaque champ du formulaire à l'événement change, on met à jour le state et la clé correspondnate et on l'assigne au state.
     const handleInputChange = (event) => {
         
         const {value, name} = event.target
@@ -127,6 +148,7 @@ const AddCollaborator = () => {
         setCollaborator(updatecollaborator);
     }
 
+    // On vérifie la checkbox admin.
     const checkButtonAdmin = (event) => {
 
         collaborator.isAdmin = event.target.checked;

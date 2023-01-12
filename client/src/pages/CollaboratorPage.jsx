@@ -6,7 +6,8 @@ import Collaborator from "../components/collaborator/Collaborator";
 
 const CollaboratorPage = () => {
 
-    const { id } = useParams();
+     // On récupère l'id depuis la route qu'on transmet au composant enfant.
+     const { id } = useParams();
 
    return (
         <Collaborator id={id}/>

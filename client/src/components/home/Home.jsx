@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 const Home = () => {
 
+    // On créé un state pour un collaborateur aléatoire.
     const [randomCollaborator, setRandomCollaborator] = useState({
         id: '',
         gender: "",
@@ -19,6 +19,7 @@ const Home = () => {
         isAdmin: false
     })
 
+    // On créé une fonction getRandomCollaborator qui va récupérer un collaborateur au hasard et l'assigner au state.
     const getRandomCollaborator = async () => {
 
         const url = 'http://localhost:9000/api/collaborateurs/random';
@@ -42,6 +43,7 @@ const Home = () => {
         getRandomCollaborator()
     }
 
+    // On lance la fonction au chargement du composant.
     useEffect( () => {
         getRandomCollaborator()
     }, [])

@@ -7,8 +7,10 @@ const DisconnectButton = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
   
+    // Fonction déclenchée au click sur le bouton Déconnexion.
     const onClickDisconnect = () => {
   
+        // On vide les données de session en rétablissant un tableau vide et on supprime le token. Puis on redirige vers la page de login.
         dispatch(userDisconnection())
         localStorage.removeItem('token');
   

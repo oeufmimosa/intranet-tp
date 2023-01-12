@@ -4,6 +4,7 @@ import UpdateCollaborator from "../components/updateCollaborator/UpdateCollabora
 
 const updateProfilePage = () => {
 
+    // On récupère l'id depuis la route qu'on transmet au composant enfant.
     const {id} = useParams();
 
     return (

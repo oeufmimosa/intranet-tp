@@ -6,8 +6,10 @@ import './../../style/form.css';
 
 const Login = () => {
 
+    // On récupère les informations du reducer de l'utilisateur connecté.
     const { userSession } = useSelector( state => state.collaboratorReducer );
 
+    // On créé un state pour les informations de connexion.
     const [userLogin, setUserLogin] = useState({
         email:'',
         password:''
@@ -16,6 +18,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // Fonction qui assigne les valeurs aux inputs.
     const handleInputChange = (event) => {
         const {value, name} = event.target
 
@@ -27,11 +30,12 @@ const Login = () => {
         setUserLogin(updateUserLogin)
     }
 
-
+    // Fonction qui vérifie le formulaire.
     const onSubmitLoginForm = async (e) => {
 
         e.preventDefault();
 
+        // On créé un objet contenant l'email et le mot de passe.
         const userInfos = {
             email: userLogin.email,
             password: userLogin.password
@@ -54,8 +58,11 @@ const Login = () => {
         localStorage.removeItem('token');
         localStorage.setItem('token', result.token);
 
+        // S'il n'y a pas d'erreurs...
         if(!result.error)
         {      
+            
+            // On assigne les informations récupérées depuis le serveur Node.js au reducer correspondant userConnection.
             dispatch(userConnection({
                 userConnection: {
                     id: result.user.id,

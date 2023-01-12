@@ -7,6 +7,7 @@ const Info = () => {
 
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    // State initial du user.
     const [user, setUser] = useState({
         id: '',
         gender: '',
@@ -23,25 +24,30 @@ const Info = () => {
         isAdmin:userSession.userConnection ? true : false
     })
 
+    // Tableau d'objets de genres.
     const civilities = [
         {value: "male", text: "Homme"}, 
         {value: "female", text: "Femme"}, 
       ]
 
+    // Tableau d'objets de catégories.
     const categories = [
         {value:'Marketing', text:'Marketing'},
         {value:'Technique', text:'Technique'},
         {value:'Client', text:'Client'}
     ]
 
+    // Fonction qui renvoie la liste des options de genres.
     const optionsCivilities = civilities.map((option, i) => {
         return <option key={i} value={option.value}>{option.text}</option>
     })
     
+     // Fonction qui renvoie la liste des catégories.
     const optionsCategories = categories.map((option, i) => {
         return <option key={i} value={option.value}>{option.text}</option>
     })
 
+    // Fonction pour la soumission du formulaire
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
@@ -58,16 +64,19 @@ const Info = () => {
             body: JSON.stringify(user)
         }
 
+        // Si la fonction checkForm renvoie true
         if(checkForm(user) === true)
         {            
             const response = await fetch(url, options)
             const result = await response.json();
             
+            // On lance la requête asyncrhone avec la fonction fetch et avec les options. On récupère la réponse du serveur Node.js
             if(result.success)
             {
                 alert(result.success);
             }
 
+             // Si la réponse contient une clé success on affiche le message, sinon on affiche le message d'erreur.
             if(result.error)
             {
                 alert(result.error);
@@ -76,6 +85,7 @@ const Info = () => {
 
     }
 
+    // Fonction de vérification du formulaire.
     const checkForm = (user) => {
         
         if(!user.gender ||
@@ -90,18 +100,19 @@ const Info = () => {
             user.photo.trim().length === 0 ||
             !user.service)
         {
-            console.log(user);
-            
+            // On affiche erreur et un retourne false.
             window.alert('Certains champs ne sont pas complétés');
             return false;
         }
 
+        // Si le mot de passe entré et sa confirmation sont différents.
         if(user.password != confirmPassword)
         {
             window.alert('Le mot de passe et sa confirmation sont différents');
             return false;
         }
 
+        // Si l'email est invalide.
         if(emailIsValid(user.email) ==false)
         {
             window.alert('Le format d\'email est incorrect');
@@ -116,6 +127,7 @@ const Info = () => {
         return /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)
     }
 
+     // Pour chaque champ du formulaire à l'événement change, on met à jour le state et la clé correspondnate et on l'assigne au state.
     const handleInputChange = (event) => {
         
         const {value, name} = event.target
@@ -128,6 +140,7 @@ const Info = () => {
         setUser(updateUser);
     }
 
+    // On récupère les informations de l'utilisateur courant.
     const fetchCurrentUser = async () => {
 
         const url = `http://localhost:9000/api/collaborateurs/${userSession.userConnection.id}`;
