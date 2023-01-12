@@ -18,9 +18,9 @@ const Card = ({ collaborator }) => {
                 <strong>{firstname} {lastname}</strong>
                 <p>Email : {email}</p>
                 <p>{city}, {country}</p>
-                <p>Téléphone: {phone}</p>
-                <p>Service: {service}</p>
-                <p>Anniversaire: {localDate}</p>
+                <p>Téléphone : {phone}</p>
+                <p>Service : {service}</p>
+                <p>Anniversaire : {localDate}</p>
                 <p><Link to={`/collaborateur/${id}`}>Voir</Link></p>
             </div>
         </>
