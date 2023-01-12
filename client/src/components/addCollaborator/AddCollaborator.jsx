@@ -219,7 +219,7 @@ const AddCollaborator = () => {
                         <label htmlFor="isAdmin">Administrateur ? :</label>
                     
                     </div>
-                    <input class="submitButton" type="submit" value="Ajouter" />
+                    <input className="submitButton" type="submit" value="Ajouter" />
                 </form>
             </div>
             

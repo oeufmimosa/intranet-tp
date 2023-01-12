@@ -43,7 +43,9 @@ const SearchCollaborator = () => {
           .filter(
             (item) => (filter !== "All" && (
                 item.city == q && filter == 'city' || 
-                item.country == q && filter == 'country'
+                item.country == q && filter == 'country' ||
+                item.firstname == q && filter == 'firstname' ||
+                item.lastname == q && filter == 'lastname'
             )) || filter == "All"
           )
           .filter(
@@ -73,7 +75,7 @@ const SearchCollaborator = () => {
                             type="search"
                             name="search"
                             id=""
-                            className="t"
+                            className=""
                             placeholder="Rechercher"
                             value={q}
                             onChange={(e) => setQ(e.target.value)}
@@ -91,6 +93,7 @@ const SearchCollaborator = () => {
                             aria-label="Filter Countries By Region"
                         >
                             <option value="All">Tous</option>
+                            <option value="firstname">Prénom</option>
                             <option value="lastname">Nom</option>
                             <option value="city">Ville</option>
                             <option value="country">Pays</option>

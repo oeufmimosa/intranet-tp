@@ -143,12 +143,10 @@ const UpdateCollaborator = ( props ) => {
         return true;
     }
 
-
     const emailIsValid = (email) => {
         return /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email)
     }
 
-    
      // Pour chaque champ du formulaire à l'événement change, on met à jour le state et la clé correspondnate et on l'assigne au state.
     const handleInputChange = (event) => {
         
@@ -171,7 +169,6 @@ const UpdateCollaborator = ( props ) => {
         <div className="login-box">   
         <h3>Modifier un collaborateur</h3>
             <form onSubmit={onSubmitForm} method="POST">
-
                 <select className="select" value={collaborator.gender} name="gender" onChange={handleInputChange}>
                     {optionsCivilities}
                 </select>
@@ -226,7 +223,7 @@ const UpdateCollaborator = ( props ) => {
                     <input type="text" name="photo" value={collaborator.photo} onChange={handleInputChange}/>
                     <label htmlFor="photo">Photo:</label>
                 </div>
-                <input class="submitButton" type="submit" value="Modifier" />
+                <input className="submitButton" type="submit" value="Modifier" />
             </form>
         </div>
             
