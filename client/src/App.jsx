@@ -79,6 +79,7 @@ const App = () => {
 
                {/* Pour toutes les routes qui ne correspondent pas aux autres */}
               <Route path="*" element={<NotFound/>}/>
+              
           </Routes>
       </div>
 

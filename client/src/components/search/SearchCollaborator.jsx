@@ -101,7 +101,6 @@ const SearchCollaborator = () => {
         return (
             <div className="">
                 <div className="">
-                    <br />
                     <div>
                         <span className="">Rechercher un collaborateur</span>
                     </div>
