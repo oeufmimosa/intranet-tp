@@ -8,9 +8,10 @@ const ProtectedAdminRoute = ({ children }) => {
     const { userSession } = useSelector( state => state.collaboratorReducer );
 
     let location = useLocation();
-
+    
+    console.log(userSession.userConnection);
     // Si le reducer ne contient pas la propriété isAdmin
-    if(!userSession.userConnection.hasOwnProperty('isAdmin'))
+    if(userSession.userConnection.isAdmin !== true) 
     {
         // On redirige vers la page d'accueil.
         return <Navigate to="/" state={{ from: location }} replace />
