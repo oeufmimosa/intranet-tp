@@ -7,7 +7,7 @@ import '../../style/card.css';
 const List = () => {
     
     // Récupération des informations du reducer, state initial des collaborateurs et du chargement.
-    const { userSession } = useSelector( state => state.collaboratorReducer );
+    const { userSession } = useSelector( state => state );
     const [collaborators, setCollaborators] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -39,7 +39,7 @@ const List = () => {
         if(verify ===true)
         {
             // On vérifie que l'utilisateur courant ne se supprime pas lui-même;
-            if(userSession.userConnection.id == collaborator.id)
+            if(userSession[0].id == collaborator.id)
             {
                 window.alert('Vous ne pouvez pas vous supprimer vous-même !');
             }
@@ -85,7 +85,7 @@ const List = () => {
                             <div key={collaborator.id} className="Card">
                                 <Card collaborator={collaborator}/>
                                 {/* Si l'utilisateur est l'admin on affiche les liens de modification et le bouton de suppression. */}
-                                {userSession.userConnection.isAdmin ?          
+                                {userSession[0].isAdmin ?          
                                     <>
                                         <p><Link to={`/collaborateur/modifier/${collaborator.id}`}>Modifier</Link></p>
                                         <button onClick={() => onClickDeleteCollaborator(collaborator)}>Supprimer</button> 

@@ -6,7 +6,7 @@ import './../../style/header.css';
 const Header = () => {
 
   // Récupération des informations du reducer sur l'utilisateur connecté.
-  const { userSession } = useSelector( state => state.collaboratorReducer );
+  const { userSession } = useSelector( state => state) ;
 
     return (
     <>
@@ -14,16 +14,16 @@ const Header = () => {
         <h1 className="Nav-title">Bienvenue sur l'intranet</h1>
         <nav className="Nav">
           {/* Si l'utilisateur est connecté on affiche les lienx correspondants des routes protégées. */}
-          {userSession.userConnection ?
+          {userSession.length > 0 ?
             <>
-                <p className="Nav-link"><Link to="/infos-personnelles">Bonjour {userSession.userConnection.firstname} {userSession.userConnection.lastname}</Link></p>
-                <img style={{width: "50px", height:'50px', borderRadius: '100%'}}src={userSession.userConnection.photo} alt={userSession.userConnection.photo} />
+                <p className="Nav-link"><Link to="/infos-personnelles">Bonjour {userSession[0].firstname} {userSession[0].lastname}</Link></p>
+                <img style={{width: "50px", height:'50px', borderRadius: '100%'}}src={userSession[0].photo} alt={userSession[0].photo} />
                 <p className="Nav-link"><Link to="/collaborateurs">Liste</Link></p>
                 <p className="Nav-link"><Link to="/infos-personnelles">Mon profil</Link></p>
                 <p className="Nav-link"><Link to="/rechercher">Rechercher</Link></p>
                 
                 {/* Si l'utilisateur connecté est un admin on affiche l'ajout de collaborateur. */}
-                {userSession.userConnection.isAdmin ? 
+                {userSession[0].isAdmin ? 
 
                   <p className="Nav-link"><Link to="/collaborateur/ajouter">Ajouter un collaborateur</Link></p>
                 :

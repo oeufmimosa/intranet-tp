@@ -7,7 +7,7 @@ import './../../style/form.css';
 const Login = () => {
 
     // On récupère les informations du reducer de l'utilisateur connecté.
-    const { userSession } = useSelector( state => state.collaboratorReducer );
+    const { userSession } = useSelector( state => state.userSession );
 
     // On créé un state pour les informations de connexion.
     const [userLogin, setUserLogin] = useState({
@@ -63,8 +63,9 @@ const Login = () => {
         {      
             
             // On assigne les informations récupérées depuis le serveur Node.js au reducer correspondant userConnection.
-            dispatch(userConnection({
-                userConnection: {
+            dispatch({
+                type:'userSession/login',
+                payload:{            
                     id: result.user.id,
                     gender: result.user.gender,
                     firstname: result.user.firstname,
@@ -77,9 +78,8 @@ const Login = () => {
                     country: result.user.country,
                     photo: result.user.photo,
                     service: result.user.service,
-                    isAdmin: result.user.isAdmin
-                }
-            }))
+                    isAdmin: result.user.isAdmin}
+            })
 
             if(result.success)
             {
@@ -97,7 +97,7 @@ const Login = () => {
 
     return (
         <>
-            {!userSession.userConnection ? 
+            {!userSession ? 
                 <div className="login-box">
                     <h3 >Connexion</h3>
                     <form method="POST" onSubmit={onSubmitLoginForm}>

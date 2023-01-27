@@ -11,7 +11,9 @@ const DisconnectButton = () => {
     const onClickDisconnect = () => {
   
         // On vide les données de session en rétablissant un tableau vide et on supprime le token. Puis on redirige vers la page de login.
-        dispatch(userDisconnection())
+        dispatch({
+            type:'userSession/logout'
+        })
         localStorage.removeItem('token');
   
         navigate('/');

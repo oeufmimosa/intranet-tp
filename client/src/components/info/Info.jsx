@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import './../../style/form.css';
 
 const Info = () => {
-    const { userSession } = useSelector( state => state.collaboratorReducer );
+    const { userSession } = useSelector( state => state);
 
     // State initial du user.
     const [user, setUser] = useState({
@@ -19,7 +19,7 @@ const Info = () => {
         country: '',
         photo: '',
         service: '',
-        isAdmin:userSession.userConnection.isAdmin ? true : false
+        isAdmin:userSession[0].isAdmin ? true : false
     })
 
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -51,7 +51,7 @@ const Info = () => {
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
-        const url = `http://localhost:9000/api/collaborateurs/${userSession.userConnection.id}`;
+        const url = `http://localhost:9000/api/collaborateurs/${userSession[0].id}`;
         const localToken = localStorage.getItem('token');
 
         const options = {
@@ -149,7 +149,7 @@ const Info = () => {
     // On récupère les informations de l'utilisateur courant.
     const fetchCurrentUser = async () => {
 
-        const url = `http://localhost:9000/api/collaborateurs/${userSession.userConnection.id}`;
+        const url = `http://localhost:9000/api/collaborateurs/${userSession[0].id}`;
         const localToken = localStorage.getItem('token');
 
         const options = {
