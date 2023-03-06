@@ -2,7 +2,7 @@
 
 (Projet individuel)
 
-## Contexte
+## Contexte 
 
 Vous travaillez dans une société de taille moyenne en pleine expension, et faites partie du pôle Technique.
 
