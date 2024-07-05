@@ -22,9 +22,7 @@ router.delete('/:id', adminOnly, deleteCollaborateur);
 
 module.exports = router;
 
-// ================================
-// == Fonctions de routage ==
-// ================================
+
 
 function getRandomCollaborateur(_, res) {
   const collaborateur = CollaborateurModel.findRandom();

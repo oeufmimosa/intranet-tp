@@ -13,9 +13,6 @@ router.post('/', postLogin);
 
 module.exports = router;
 
-// ================================
-// == Fonctions de routage ==
-// ================================
 
 function postLogin(req, res) {
   const user = CollaborateurModel.findByEmail(req.body.email);

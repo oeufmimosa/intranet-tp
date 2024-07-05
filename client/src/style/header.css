@@ -1,40 +1,35 @@
-.Header
-{
-  background-color: darkslategray;;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+.Header {
+  background-color: #ff6b6b;
+  padding: 20px;
+  color: white; /* Texte en blanc pour contraste */
 }
 
 /* CSS POUR LA NAVIGATION */
-
-.Nav
-{
-  display:flex;
-  flex-direction:row;
+.Nav {
+  display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
-.Nav-title
-{
+.Nav-title {
   font-size: 20px;
+  color: white; /* Texte en blanc */
 }
 
-.Nav-link
-{
-  margin-left:20px;
-  margin-right:20px;
-  padding-left:5px;
-  padding-right:5px;
+.Nav-link {
+  margin: 0 20px;
+  padding: 5px;
+  color: white; /* Texte en blanc */
+  text-decoration: none;
+}
+.Nav-link:hover {
+  color: #c9302c; /* Couleur au survol */
 }
 
-@media screen and (max-width: 600px) 
-{
-  .Nav 
-  {
+@media screen and (max-width: 600px) {
+  .Nav {
     flex-direction: column;
   }
 }
